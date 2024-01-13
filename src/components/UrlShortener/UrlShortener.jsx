@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import UrlBox from "../UrlBox/UrlBox";
-import UrlTable from "../UrlTable/urlTable";
+import UrlTable from "../UrlTable/UrlTable";
 
 const UrlShortner = () => {
   //const [textToCopy, setTextToCopy] = useState("");
