@@ -1,4 +1,4 @@
-import UrlTable from "../components/UrlTable/urlTable";
+import UrlTable from "../components/UrlTable/UrlTable";
 
 const List = () => {
   return (
