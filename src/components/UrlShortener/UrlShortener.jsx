@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import UrlBox from "../UrlBox/UrlBox";
 import UrlTable from "../UrlTable/UrlTable";
+import { useNavigate } from "react-router-dom";
 
 const UrlShortner = () => {
   //const [textToCopy, setTextToCopy] = useState("");
@@ -8,23 +9,27 @@ const UrlShortner = () => {
   const [shortUrl, setShortUrl] = useState("");
 
   const [urlData, setUrlData] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchUrlData = async () => {
       try {
-        // const response = await fetch("http://localhost:3000/api/urlData");
-        const response = await fetch(
-          "https://url-shortify-node.onrender.com/api/urlData"
-        );
+        const response = await fetch("/api/urlData");
+        // const response = await fetch(
+        //   "https://url-shortify-node.onrender.com/api/urlData"
+        // );
         const data = await response.json();
+        if (data.error) {
+          throw new Error(data.error);
+        }
         setUrlData(data);
       } catch (error) {
-        console.error("Error fetching URL data:", error);
+        // console.error("Error fetching URL data:", error);
+        navigate("/login");
       }
     };
 
     fetchUrlData();
-  }, []);
+  }, [navigate]);
 
   // const urlData = [
   //   {

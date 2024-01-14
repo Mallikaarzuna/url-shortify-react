@@ -7,7 +7,7 @@ const LoginPage = () => {
   const handleLogin = async ({ username, password }) => {
     try {
       // Make an API call to your backend for authentication
-      const response = await axios.post("http://localhost:3000/api/login", {
+      const response = await axios.post("/api/login", {
         username,
         password,
       });
