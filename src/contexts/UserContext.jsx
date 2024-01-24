@@ -17,7 +17,7 @@ const UserProvider = ({ children }) => {
 
         // Extract user information from the payload
         const { username, name, id } = decodedToken;
-
+        console.log(username);
         // Set the user state
         setUser(username || "Guest");
       } catch (error) {
