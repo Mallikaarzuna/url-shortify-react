@@ -19,7 +19,7 @@ const UserProvider = ({ children }) => {
         const { username, name, id } = decodedToken;
 
         // Set the user state
-        setUser(username);
+        setUser(username || "Guest");
       } catch (error) {
         console.error("Error decoding JWT token:", error);
       }
