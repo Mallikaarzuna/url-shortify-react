@@ -8,9 +8,7 @@ import { UserContext } from "../../contexts/UserContext";
 const AppHeader = () => {
   const { isUserAuth, logoutHandler } = useContext(AuthContext);
 
-
-  const { user } = useContext(UserContext);
-
+  //const { user } = useContext(UserContext);
 
   //created hook for naviagting to login page
   const navigate = useNavigate();
@@ -50,8 +48,8 @@ const AppHeader = () => {
             >
               <i className="bi bi-person-fill"></i>
 
-              <span className="ms-2">{user}</span>
-
+              {/* <span className="ms-2">{user}</span> */}
+              <span className="ms-2">Guest</span>
             </Button>
           </Nav>
         </Container>
