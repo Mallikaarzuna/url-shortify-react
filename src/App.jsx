@@ -4,16 +4,19 @@ import AppFooter from "./components/AppFooter/AppFooter";
 import AppHeader from "./components/AppHeader/AppHeader";
 
 import PageRoutes from "./routes/PageRoutes";
+import AuthProvider from "./contexts/AuthContext";
 
 function App() {
   return (
-    <div>
-      <AppHeader />
-      <main>
-        <PageRoutes />
-      </main>
-      <AppFooter />
-    </div>
+    <AuthProvider>
+      <div>
+        <AppHeader />
+        <main>
+          <PageRoutes />
+        </main>
+        <AppFooter />
+      </div>
+    </AuthProvider>
   );
 }
 
