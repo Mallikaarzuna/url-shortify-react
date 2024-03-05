@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
+import { useContext } from "react";
 import { Button } from "react-bootstrap";
+import { UrlContext } from "../../contexts/UrlContext";
 
 const UrlBox = ({
   //copyTextHandler,

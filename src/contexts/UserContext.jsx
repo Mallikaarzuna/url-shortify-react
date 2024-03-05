@@ -1,10 +1,13 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { AuthContext } from "./AuthContext";
 
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const { isUserAuth } = useContext(AuthContext);
+
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     // Retrieve the token from local storage
@@ -17,15 +20,25 @@ const UserProvider = ({ children }) => {
 
         // Extract user information from the payload
         const { username, name, id } = decodedToken;
-        console.log(username);
+
         // Set the user state
-        setUser(username || "Guest");
+        //setUser(username || "Guest");
+        setUser(username);
       } catch (error) {
         console.error("Error decoding JWT token:", error);
       }
     }
-  }, []);
-  return <UserProvider value={{ user }}>{children}</UserProvider>;
+  }, [isUserAuth]);
+
+  useEffect(() => {
+    if (!isUserAuth) {
+      setUser("");
+    }
+  }, [isUserAuth]);
+
+  return (
+    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+  );
 };
 
 UserProvider.propTypes = {

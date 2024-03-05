@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UrlBox from "../UrlBox/UrlBox";
 import UrlTable from "../UrlTable/UrlTable";
 import { useNavigate } from "react-router-dom";
+import { UrlContext } from "../../contexts/UrlContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const UrlShortner = () => {
   //const [textToCopy, setTextToCopy] = useState("");
@@ -10,26 +12,28 @@ const UrlShortner = () => {
 
   const [urlData, setUrlData] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchUrlData = async () => {
-      try {
-        const response = await fetch("/api/urlData");
-        // const response = await fetch(
-        //   "https://url-shortify-node.onrender.com/api/urlData"
-        // );
-        const data = await response.json();
-        if (data.error) {
-          throw new Error(data.error);
-        }
-        setUrlData(data);
-      } catch (error) {
-        // console.error("Error fetching URL data:", error);
-        navigate("/login");
-      }
-    };
+  const { frontendBaseUrl } = useContext(UrlContext);
+  const { isUserAuth } = useContext(AuthContext);
+  // useEffect(() => {
+  //   const fetchUrlData = async () => {
+  //     try {
+  //       const response = await fetch("/api/urlData");
+  //       // const response = await fetch(
+  //       //   "https://url-shortify-node.onrender.com/api/urlData"
+  //       // );
+  //       const data = await response.json();
+  //       if (data.error) {
+  //         throw new Error(data.error);
+  //       }
+  //       setUrlData(data);
+  //     } catch (error) {
+  //       // console.error("Error fetching URL data:", error);
+  //       navigate("/login");
+  //     }
+  //   };
 
-    fetchUrlData();
-  }, [navigate]);
+  //   fetchUrlData();
+  // }, [navigate]);
 
   // const urlData = [
   //   {
@@ -63,25 +67,30 @@ const UrlShortner = () => {
   };
 
   const submitButtonClickHandler = async () => {
-    console.log(longUrl);
-    try {
-      const response = await fetch("http://localhost:3000/api/shortUrl", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ longUrl }),
-      });
+    if (isUserAuth) {
+      try {
+        //const response = await fetch("http://localhost:3000/api/shortUrl", {
+        const response = await fetch("/api/shortUrl", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ longUrl }),
+        });
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Shortened URL:", result.shortUrl);
-        setShortUrl(result.shortUrl);
-      } else {
-        console.error("Failed to shorten URL");
+        if (response.ok) {
+          const result = await response.json();
+
+          const concatBaseURL = frontendBaseUrl + "/" + result.shortUrl;
+          setShortUrl(concatBaseURL);
+        } else {
+          console.error("Failed to shorten URL");
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
+    } else {
+      navigate("/login");
     }
   };
 
@@ -94,7 +103,7 @@ const UrlShortner = () => {
         longUrlHandler={longUrlHandler}
         shortUrl={shortUrl}
       />
-      <UrlTable data={urlData} />
+      {/* <UrlTable data={urlData} /> */}
     </>
   );
 };

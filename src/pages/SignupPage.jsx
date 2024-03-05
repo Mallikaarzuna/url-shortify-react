@@ -15,17 +15,18 @@ const SignupPage = () => {
     // Perform signup validation here
     try {
       //Make an API call to the backend for user registration
-      const response = await axios.post("http://localhost:3000/api/register", {
+      const response = await axios.post("/api/register", {
         firstName,
         lastName,
         username,
         password,
       });
 
-      console.log(response.data); // Log the response from the server
-
-      // You can handle success or navigate to another page on successful registration
-      navigate("/login");
+      // Check for a successful status code (201 Created)
+      if (response.status === 201) {
+        // You can handle success or navigate to another page on successful registration
+        navigate("/login");
+      }
     } catch (error) {
       console.error("Error during user registration:", error.response.data);
       // Handle errors, e.g., show error messages to the user

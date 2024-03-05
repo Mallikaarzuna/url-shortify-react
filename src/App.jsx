@@ -1,21 +1,19 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import AppFooter from "./components/AppFooter/AppFooter";
-import AppHeader from "./components/AppHeader/AppHeader";
 
 import PageRoutes from "./routes/PageRoutes";
 import AuthProvider from "./contexts/AuthContext";
+import UserProvider from "./contexts/UserContext";
+import UrlProvider from "./contexts/UrlContext";
 
 function App() {
   return (
     <AuthProvider>
-      <div>
-        <AppHeader />
-        <main>
+      <UserProvider>
+        <UrlProvider>
           <PageRoutes />
-        </main>
-        <AppFooter />
-      </div>
+        </UrlProvider>
+      </UserProvider>
     </AuthProvider>
   );
 }

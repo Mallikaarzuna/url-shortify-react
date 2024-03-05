@@ -8,7 +8,7 @@ import { UserContext } from "../../contexts/UserContext";
 const AppHeader = () => {
   const { isUserAuth, logoutHandler } = useContext(AuthContext);
 
-  //const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   //created hook for naviagting to login page
   const navigate = useNavigate();
@@ -21,12 +21,11 @@ const AppHeader = () => {
             <Link to={route.HOME}> URL Shortener App</Link>
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link>
-              <Link to={route.LOGIN}>Login</Link>
-            </Nav.Link>
-            <Nav.Link>
-              <Link to={route.LIST}>URL List</Link>
-            </Nav.Link>
+            {isUserAuth && (
+              <Nav.Link>
+                <Link to={route.LIST}>URL List</Link>
+              </Nav.Link>
+            )}
           </Nav>
           <Nav>
             {!isUserAuth && (
@@ -49,7 +48,7 @@ const AppHeader = () => {
               <i className="bi bi-person-fill"></i>
 
               {/* <span className="ms-2">{user}</span> */}
-              <span className="ms-2">Guest</span>
+              <span className="ms-2">{user ? user : "Guest"}</span>
             </Button>
           </Nav>
         </Container>
