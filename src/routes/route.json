@@ -1,6 +1,7 @@
 {
   "HOME": "/",
-  "SIGNUP": "/Signup",
+  "SIGNUP": "/signup",
   "LOGIN": "/login",
-  "LIST": "/list"
+  "LIST": "/list",
+  "CONTACT": "/contact"
 }

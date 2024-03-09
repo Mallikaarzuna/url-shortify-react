@@ -1,5 +1,5 @@
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import route from "../../routes/route.json";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -13,19 +13,39 @@ const AppHeader = () => {
   //created hook for naviagting to login page
   const navigate = useNavigate();
 
+  const activeClasses = ({ isActive }) =>
+    isActive
+      ? "text-white text-decoration-none border border-2 p-2 border-white"
+      : "text-white text-decoration-none";
+
   return (
     <header className="mb-3">
       <Navbar bg="primary" data-bs-theme="dark">
         <Container>
           <Navbar.Brand>
-            <Link to={route.HOME}> URL Shortener App</Link>
+            <NavLink
+              className="text-white text-decoration-none"
+              to={route.HOME}
+            >
+              URL Shortener App
+            </NavLink>
           </Navbar.Brand>
           <Nav className="me-auto">
             {isUserAuth && (
               <Nav.Link>
-                <Link to={route.LIST}>URL List</Link>
+                <NavLink className={activeClasses} to={route.LIST}>
+                  URL List
+                </NavLink>
               </Nav.Link>
             )}
+
+            <Nav>
+              <Nav.Link>
+                <NavLink className={activeClasses} to={route.CONTACT}>
+                  Contact Us
+                </NavLink>
+              </Nav.Link>
+            </Nav>
           </Nav>
           <Nav>
             {!isUserAuth && (
